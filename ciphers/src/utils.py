@@ -1,5 +1,8 @@
+import string
+
+
 def shift_letter(letter, offset):
-    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    alphabet = string.ascii_lowercase
     original_idx = alphabet.index(letter.lower())
     new_idx = original_idx + offset
     wrapped_idx = new_idx % len(alphabet)

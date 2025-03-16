@@ -1,4 +1,5 @@
 import argparse
+import string
 
 from utils import shift_letter
 
@@ -12,19 +13,24 @@ parser.add_argument(
 )
 parser.add_argument(
     "--key",
-    required=True,
     type=int,
     help="Integer key used to shift characters in the cipher (e.g., a shift of 3 in the alphabet means 'A' becomes 'D')",
 )
 parser.add_argument("--decrypt", action="store_true", help="Decrypt instead of encrypt")
+parser.add_argument("--attack", action="store_true", help="Try to decrypt without the key")
 
 args = parser.parse_args()
 
+# Argument validation
+if args.decrypt and args.attack:
+    parser.error("The --decrypt and --attack flags cannot be used together.")
 
-def main(original_text, key, decrypt):
+if args.key is None and not args.attack:
+    parser.error("The --key argument is required unless --attack is specified.")
+
+
+def encrypt(original_text, key):
     new_text = ""
-    if decrypt:
-        key *= -1
 
     for character in original_text:
         if not character.isalpha():
@@ -34,5 +40,19 @@ def main(original_text, key, decrypt):
     return new_text
 
 
+def attack(original_text):
+    alphabet = string.ascii_lowercase
+
+    print("One of the below 26 plaintext instances is the decrypted message:")
+
+    for potential_key in range(len(alphabet)):
+        print(encrypt(original_text, potential_key * -1), end="\n\n")
+
+
 if __name__ == "__main__":
-    print(main(args.text, args.key, args.decrypt))
+    if args.decrypt:
+        print(encrypt(args.text, args.key * -1))
+    elif args.attack:
+        attack(args.text)
+    else:
+        print(encrypt(args.text, args.key))
