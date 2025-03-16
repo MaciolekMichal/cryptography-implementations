@@ -4,7 +4,4 @@ def shift_letter(letter, offset):
     new_idx = original_idx + offset
     wrapped_idx = new_idx % len(alphabet)
 
-    if letter.islower():
-        return alphabet[wrapped_idx]
-    else:
-        return alphabet[wrapped_idx].upper()
+    return alphabet[wrapped_idx]

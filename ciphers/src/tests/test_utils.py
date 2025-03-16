@@ -21,9 +21,9 @@ def test_shift_letter_wrapped(letter, offset, expected):
 
 
 @pytest.mark.parametrize("letter, offset, expected", [
-    ('A', 1, 'B'),
-    ('X', 3, 'A'),
-    ('Z', 4, 'D')
+    ('A', 1, 'b'),
+    ('X', 3, 'a'),
+    ('Z', 4, 'd')
 ])
 def test_shift_letter_uppercase(letter, offset, expected):
     assert shift_letter(letter, offset) == expected
@@ -32,7 +32,7 @@ def test_shift_letter_uppercase(letter, offset, expected):
 @pytest.mark.parametrize("letter, offset, expected", [
     ('b', -1, 'a'),
     ('a', -2, 'y'),
-    ('A', -2, 'Y')
+    ('A', -2, 'y')
 ])
 def test_shift_letter_negative_shift(letter, offset, expected):
     assert shift_letter(letter, offset) == expected
